@@ -1,7 +1,7 @@
 <?php
 /**
  * mm_ddYMap
- * @version 1.3.1 (2013-06-08)
+ * @version 1.4 (2013-10-04)
  * 
  * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
  * 
@@ -14,38 +14,36 @@
  * @param $h {integer} - Height of the map container. Default: 400.
  * @param $hideField {boolean} - Original coordinates field hiding status (true — hide, false — show). Default: true.
  * 
- * @link http://code.divandesign.biz/modx/mm_ddymap/1.3.1
+ * @link http://code.divandesign.biz/modx/mm_ddymap/1.4
  * 
  * @copyright 2013, DivanDesign
  * http://www.DivanDesign.biz
  */
 
 function mm_ddYMap($tvs, $roles = '', $templates = '', $w = 'auto', $h = '400', $hideField = true){
-	global $modx, $mm_current_page, $mm_fields;
+	global $modx, $mm_current_page;
 	$e = &$modx->Event;
 	
 	if ($e->name == 'OnDocFormRender' && useThisRule($roles, $templates)){
 		$output = '';
 		
-		// if we've been supplied with a string, convert it into an array 
+		//if we've been supplied with a string, convert it into an array
 		$tvs = makeArray($tvs);
 		
 		$usedTvs = tplUseTvs($mm_current_page['template'], $tvs, '', 'id', 'name');
-		if ($usedTvs == false){
-			return;
-		}
+		if ($usedTvs == false){return;}
 		
-		// We always put a JS comment, which makes debugging much easier
+		//We always put a JS comment, which makes debugging much easier
 		$output .= "//  -------------- mm_ddYMap :: Begin ------------- \n";
 		
-		//Подключаем основной js
+		//The main js file including
 		$output .= includeJs($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jquery.ddManagerManager.mm_ddYMap-1.0.js', 'js', 'jquery.ddManagerManager.mm_ddYMap', '1.0');
-		//Подключаем библиотеку карт
+		//The Yandex.Maps library including
 		$output .= includeJs('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU&onload=mm_ddYMap_init', 'js', 'api-maps.yandex.ru', '2.0');
 		
-		//Перебираем переданные TV (именно их, а не те, что получены tplUseTvs, чтобы сохранился порядок вывода)
+		//Iterate over supplied TVs instead of doing so to the result of tplUseTvs() to maintain rendering order.
 		foreach ($tvs as $tv){
-			//Если эта TV валидная, делаем карту
+			//If this $tv is used in a current template
 			if (isset($usedTvs[$tv])){
 				$output .= '
 $j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({
@@ -57,9 +55,10 @@ $j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({
 			}
 		}
 		
-		$output .= "//  -------------- mm_ddYMap :: End ------------- \n";
+		$output .= "\n//  -------------- mm_ddYMap :: End -------------";
 		
-		$e->output($output . "\n");	// Send the output to the browser
+		//Send the output to the browser
+		$e->output($output."\n");
 	}
 }
 ?>
