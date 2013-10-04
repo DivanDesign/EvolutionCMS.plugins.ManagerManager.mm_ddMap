@@ -5,7 +5,7 @@
  * 
  * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
  * 
- * @uses ManagerManager plugin 0.5.
+ * @uses ManagerManager plugin 0.5.2.
  * 
  * @param $tvs {comma separated string} - TV names to which the widget is applied. @required
  * @param $roles {comma separated string} - The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
@@ -30,8 +30,8 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $w = 'auto', $h = '400', 
 		// if we've been supplied with a string, convert it into an array 
 		$tvs = makeArray($tvs);
 		
-		$tvs = tplUseTvs($mm_current_page['template'], $tvs);
-		if ($tvs == false){
+		$usedTvs = tplUseTvs($mm_current_page['template'], $tvs, '', 'id', 'name');
+		if ($usedTvs == false){
 			return;
 		}
 		
@@ -43,14 +43,18 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $w = 'auto', $h = '400', 
 		//Подключаем библиотеку карт
 		$output .= includeJs('http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU&onload=mm_ddYMap_init', 'js', 'api-maps.yandex.ru', '2.0');
 		
+		//Перебираем переданные TV (именно их, а не те, что получены tplUseTvs, чтобы сохранился порядок вывода)
 		foreach ($tvs as $tv){
-			$output .= '
-$j("#tv'.$tv['id'].'").mm_ddYMap({
+			//Если эта TV валидная, делаем карту
+			if (isset($usedTvs[$tv])){
+				$output .= '
+$j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({
 	hideField: '.intval($hideField).',
 	width: "'.$w.'",
 	height: "'.$h.'"
 });
-			';
+				';
+			}
 		}
 		
 		$output .= "//  -------------- mm_ddYMap :: End ------------- \n";
