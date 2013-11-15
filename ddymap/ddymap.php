@@ -1,7 +1,7 @@
 <?php
 /**
  * mm_ddYMap
- * @version 1.4.1 (2013-10-25)
+ * @version 1.4.2 (2013-11-15)
  * 
  * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
  * 
@@ -17,7 +17,7 @@
  * @event OnDocFormPrerender
  * @event OnDocFormRender
  * 
- * @link http://code.divandesign.biz/modx/mm_ddymap/1.4.1
+ * @link http://code.divandesign.biz/modx/mm_ddymap/1.4.2
  * 
  * @copyright 2013, DivanDesign
  * http://www.DivanDesign.biz
