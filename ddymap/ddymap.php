@@ -5,7 +5,7 @@
  * 
  * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
  * 
- * @uses ManagerManager plugin 0.5.2.
+ * @uses ManagerManager plugin 0.6.
  * 
  * @param $tvs {comma separated string} - TV names to which the widget is applied. @required
  * @param $roles {comma separated string} - The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
@@ -24,10 +24,10 @@
  */
 
 function mm_ddYMap($tvs, $roles = '', $templates = '', $w = 'auto', $h = '400', $hideField = true){
-	global $modx, $mm_current_page;
-	$e = &$modx->Event;
-	
 	if (!useThisRule($roles, $templates)){return;}
+	
+	global $modx;
+	$e = &$modx->Event;
 	
 	if ($e->name == 'OnDocFormPrerender'){
 		//The main js file including
@@ -37,6 +37,8 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $w = 'auto', $h = '400', 
 		
 		$e->output($output);
 	}else if ($e->name == 'OnDocFormRender'){
+		global $mm_current_page;
+		
 		$output = '';
 		
 		//if we've been supplied with a string, convert it into an array
@@ -45,27 +47,26 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $w = 'auto', $h = '400', 
 		$usedTvs = tplUseTvs($mm_current_page['template'], $tvs, '', 'id', 'name');
 		if ($usedTvs == false){return;}
 		
-		//We always put a JS comment, which makes debugging much easier
-		$output .= "//  -------------- mm_ddYMap :: Begin ------------- \n";
+		$output .= "//---------- mm_ddYMap :: Begin -----\n";
 		
 		//Iterate over supplied TVs instead of doing so to the result of tplUseTvs() to maintain rendering order.
 		foreach ($tvs as $tv){
 			//If this $tv is used in a current template
 			if (isset($usedTvs[$tv])){
-				$output .= '
+				$output .= 
+'
 $j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({
 	hideField: '.intval($hideField).',
 	width: "'.$w.'",
 	height: "'.$h.'"
 });
-				';
+';
 			}
 		}
 		
-		$output .= "\n//  -------------- mm_ddYMap :: End -------------";
+		$output .= "//---------- mm_ddYMap :: End -----\n";
 		
-		//Send the output to the browser
-		$e->output($output."\n");
+		$e->output($output);
 	}
 }
 ?>
