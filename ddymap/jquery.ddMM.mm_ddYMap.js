@@ -1,11 +1,11 @@
 /**
  * jQuery ddMM.mm_ddYMap Plugin
- * @version: 1.0.2 (2013-11-15)
+ * @version 1.0.3 (2015-04-30)
  * 
  * @uses jQuery 1.9.1
  * @uses $.ddMM 1.0
- *
- * @copyright 2013, DivanDesign
+ * 
+ * @copyright 2015, DivanDesign
  * http://www.DivanDesign.biz
  */
 
@@ -20,8 +20,6 @@ $.ddMM.mm_ddYMap = {
 		//Высота контейнера с картой
 		height: 400
 	},
-	//Флаг сабмита поиска
-//	submitSerach: false,
 	//Массив id всех TV
 	tvs: new Array(),
 	//Загруженна ли карта
@@ -41,12 +39,6 @@ $.ddMM.mm_ddYMap = {
 				{},
 				{draggable: true}
 			);
-	
-/*		//При сабмите поиска
-		serachControl.events.add('submit', function(){
-			//Укажем это
-			_this.submitSerach = true;
-		});*/
 		
 		//При выборе результата поиска
 		serachControl.events.add('resultselect', function(event){
@@ -89,18 +81,18 @@ $.ddMM.mm_ddYMap = {
 
 /**
  * jQuery.fn.mm_ddYMap Plugin
- * @version 1.0 (2013-09-16)
+ * @version 1.0.1 (2015-04-30)
  * 
- * @description Делает карту.
+ * @desc Делает карту.
  * 
- * @uses $.ddMM.mm_ddYMap 1.0
+ * @uses $.ddMM.mm_ddYMap
  * 
- * Параметры передаются в виде plain object.
- * @param hideField {boolean} - Нужно ли скрывать оригинальное поле. Default: true.
- * @param width {integer; 'auto'} - Ширина контейнера с картой. Default: 'auto'.
- * @param height {integer} - Высота контейнера с картой. Default: 400.
+ * @param params {plain object} - Параметры передаются в виде plain object.
+ * @param params.hideField {boolean} - Нужно ли скрывать оригинальное поле. Default: true.
+ * @param params.width {integer; 'auto'} - Ширина контейнера с картой. Default: 'auto'.
+ * @param params.height {integer} - Высота контейнера с картой. Default: 400.
  * 
- * @copyright 2013, DivanDesign
+ * @copyright 2015, DivanDesign
  * http://www.DivanDesign.biz
  */
 $.fn.mm_ddYMap = function(params){
@@ -128,20 +120,20 @@ $.fn.mm_ddYMap = function(params){
 			//Запоминаем название поля
 			sectionName = $elemParent.find('.warning').text(),
 			//Контейнер для карты
-			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody tmplvars"><div id="ddYMap' + elem.id + '" style="width: ' + params.width + '; height: ' + params.height + 'px; position: relative; border: 1px solid #c3c3c3;"></div></div>'),
+			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody"><div id="ddYMap' + elem.id + '" style="width: ' + params.width + '; height: ' + params.height + 'px; position: relative; border: 1px solid #c3c3c3;"></div></div>'),
 			$YMap = $sectionContainer.find('#ddYMap' + elem.id);
-	
+		
 		//Добавляем контейнер
 		elem.$elem.parents('.tab-page:first').append($sectionContainer);
 		
 		//Скрываем родителя и разделитель
 		$elemParent.hide().prev('tr').hide();
-	
+		
 		//Если скрывать не надо, засовываем перед картой
 		if (!params.hideField){
 		 	elem.$elem.insertBefore($YMap);
 		}
-	
+		
 		//Если координаты не заданны, то задаём дефолт
 		if ($.trim(elem.LngLat) == ''){
 			elem.LngLat = '55.17725339420589,61.29035648102616';
@@ -164,17 +156,6 @@ $.fn.mm_ddYMap = function(params){
 
 //On document.ready
 $(function(){
-/*	//Самбмит главной формы
-	$('#mutate').on('submit', function(){
-		//Если до этого был сабмит поиска
-		if ($.ddMM.mm_ddYMap.submitSerach){
-			//Сбросим защёлку
-			$.ddMM.mm_ddYMap.submitSerach = false;
-			//Выкидываем осечку
-			return false;
-		}
-	});*/
-	
 	//Глобальная инициализация карт (для солбэка от Яндекс.Карт)
 	window.mm_ddYMap_init = function(){
 		//Перебираем все
