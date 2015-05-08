@@ -1,9 +1,11 @@
 /**
  * jQuery ddMM.mm_ddYMap Plugin
- * @version 1.0.3 (2015-04-30)
+ * @version 1.1 (2015-05-07)
  * 
- * @uses jQuery 1.9.1
- * @uses $.ddMM 1.0
+ * @uses Yandex.Maps 2.1.
+ * @uses jQuery 1.10.2.
+ * @uses jQuery.ddMM 1.0.
+ * @uses jQuery.ddYMap 1.3.1.
  * 
  * @copyright 2015, DivanDesign
  * http://www.DivanDesign.biz
@@ -20,68 +22,64 @@ $.ddMM.mm_ddYMap = {
 		//Высота контейнера с картой
 		height: 400
 	},
-	//Массив id всех TV
-	tvs: new Array(),
-	//Загруженна ли карта
-	loaded: false,
 	//Инициализация карты
 	init: function(elem){
-		//Создаём карту
-		var map = new ymaps.Map('ddYMap' + elem.id, {
-	 			center: [elem.LngLat[0], elem.LngLat[1]],
-				zoom: 15,
-			}),
-			//Контрол поиска
-			serachControl = new ymaps.control.SearchControl({useMapBounds: true, noPlacemark: true, width: 400}),
-			//Создаём метку
-			marker = new ymaps.Placemark(
-				[elem.LngLat[0], elem.LngLat[1]],
-				{},
-				{draggable: true}
-			);
+		var $mapElement = $('#ddYMap' + elem.id);
 		
-		//При выборе результата поиска
-		serachControl.events.add('resultselect', function(event){
-			var coords = event.originalEvent.target.getResultsArray()[0].geometry.getCoordinates();
+		//После инициализации карты
+		$mapElement.on('ddAfterInit', function(){
+			//Объект карты
+			var map = $mapElement.data('ddYMap').map,
+				//Контрол поиска
+				serachControl = new ymaps.control.SearchControl({
+					options: {
+						useMapBounds: true,
+						noPlacemark: true,
+						maxWidth: 400
+					}
+				}),
+				//Метка.
+				//TODO: Это очень странно, но похоже, что «map.geoObjects.get(0)» возвращает «GeoObjectCollection» вместо «Placemark», потому приходится ещё раз делать «get(0)».
+				placemark = map.geoObjects.get(0).get(0);
 			
-			//Переместим куда надо маркер
-			marker.geometry.setCoordinates(coords);
+			//При выборе результата поиска
+			serachControl.events.add('resultselect', function(event){
+				var coords = event.originalEvent.target.getResultsArray()[0].geometry.getCoordinates();
+				
+				//Переместим куда надо маркер
+				placemark.geometry.setCoordinates(coords);
+				
+				//Запишем значение в оригинальное поле
+				elem.$elem.val(coords[0] + ',' + coords[1]);
+			});
 			
-			//Запишем значение в оригинальное поле
-			elem.$elem.val(coords[0] + ',' + coords[1]);
+			map.controls.add(serachControl);
+			
+			//При клике по карте меняем координаты метки
+			map.events.add('click', function(event){
+				var coords = event.get('coords');
+				
+				placemark.geometry.setCoordinates([coords[0], coords[1]]);
+				
+				elem.$elem.val(coords[0] + ',' + coords[1]);
+			});
+			
+			//Перетаскивание метки
+			placemark.events.add('dragend', function(event){
+				var coords = placemark.geometry.getCoordinates();
+				
+				elem.$elem.val(coords[0] + ',' + coords[1]);
+			});
+		}).ddYMap({
+			placemarks: elem.LngLat,
+			placemarkOptions: {draggable: true}
 		});
-		
-		//Добавляем контролы
-		map.controls
-			.add('zoomControl')
-			.add('typeSelector')
-			.add('scaleLine')
-			.add('mapTools')
-			.add(serachControl);
-		
-		//При клике по карте меняем координаты метки
-		map.events.add('click', function(event){
-			var coords = event.get('coordPosition');
-			
-			marker.geometry.setCoordinates([coords[0], coords[1]]);
-			elem.$elem.val(coords[0] + ',' + coords[1]);
-		});
-		
-		//Перетаскивание метки
-		marker.events.add('dragend', function(event){
-			var markerCoord = marker.geometry.getCoordinates();
-			
-			elem.$elem.val(markerCoord[0] + ',' + markerCoord[1]);
-		});
-		
-		//Добавляем метку на карту
-		map.geoObjects.add(marker);
 	}
 };
 
 /**
  * jQuery.fn.mm_ddYMap Plugin
- * @version 1.0.1 (2015-04-30)
+ * @version 1.0.2 (2015-05-07)
  * 
  * @desc Делает карту.
  * 
@@ -142,30 +140,8 @@ $.fn.mm_ddYMap = function(params){
 		//Разбиваем координаты
 		elem.LngLat = elem.LngLat.split(',');
 		
-		//Если карта ещё не загруженна
-		if (!$.ddMM.mm_ddYMap.loaded){
-			//Просто запоминаем (инициализируется само при загрузке)
-			$.ddMM.mm_ddYMap.tvs.push(elem);
-		//Если же карта уже загружена
-		}else{
-			//Просто инициализируем
-			$.ddMM.mm_ddYMap.init(elem);
-		}
+		//Инициализируем
+		$.ddMM.mm_ddYMap.init(elem);
 	});
 };
-
-//On document.ready
-$(function(){
-	//Глобальная инициализация карт (для солбэка от Яндекс.Карт)
-	window.mm_ddYMap_init = function(){
-		//Перебираем все
-		for (var i = $.ddMM.mm_ddYMap.tvs.length - 1; i >= 0; i--){
-			//Инициализируем карту для нужной TV
-			$.ddMM.mm_ddYMap.init($.ddMM.mm_ddYMap.tvs[i]);
-		}
-		
-		//Запоминаем, что первый раз карта уже инициализированна
-		$.ddMM.mm_ddYMap.loaded = true;
-	};
-});
 })(jQuery);
