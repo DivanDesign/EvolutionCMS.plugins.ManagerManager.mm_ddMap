@@ -10,8 +10,8 @@
  * @param $tvs {comma separated string} - TV names to which the widget is applied. @required
  * @param $roles {comma separated string} - The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
  * @param $templates {comma separated string} - Id of the templates to which this widget is applied (when this parameter is empty then widget is applied to the all templates). Default: ''.
- * @param $w {'auto'; integer} - Width of the map container. Default: 'auto'.
- * @param $h {integer} - Height of the map container. Default: 400.
+ * @param $width {'auto'; integer} - Width of the map container. Default: 'auto'.
+ * @param $height {integer} - Height of the map container. Default: 400.
  * @param $hideField {boolean} - Original coordinates field hiding status (true — hide, false — show). Default: true.
  * 
  * @event OnDocFormPrerender
@@ -23,7 +23,7 @@
  * http://www.DivanDesign.biz
  */
 
-function mm_ddYMap($tvs, $roles = '', $templates = '', $w = 'auto', $h = '400', $hideField = true){
+function mm_ddYMap($tvs, $roles = '', $templates = '', $width = 'auto', $height = '400', $hideField = true){
 	if (!useThisRule($roles, $templates)){return;}
 	
 	global $modx;
@@ -59,8 +59,8 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $w = 'auto', $h = '400', 
 '
 $j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({
 	hideField: '.intval($hideField).',
-	width: "'.$w.'",
-	height: "'.$h.'"
+	width: "'.$width.'",
+	height: "'.$height.'"
 });
 ';
 			}
