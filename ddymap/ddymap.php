@@ -1,11 +1,11 @@
 <?php
 /**
  * mm_ddYMap
- * @version 1.4.3 (2013-12-10)
+ * @version 1.5b (2015-05-08)
  * 
  * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
  * 
- * @uses ManagerManager plugin 0.6.
+ * @uses ManagerManager plugin 0.6.2.
  * 
  * @param $tvs {comma separated string} - TV names to which the widget is applied. @required
  * @param $roles {comma separated string} - The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
@@ -17,9 +17,9 @@
  * @event OnDocFormPrerender
  * @event OnDocFormRender
  * 
- * @link http://code.divandesign.biz/modx/mm_ddymap/1.4.3
+ * @link http://code.divandesign.biz/modx/mm_ddymap/1.5b
  * 
- * @copyright 2013, DivanDesign
+ * @copyright 2015, DivanDesign
  * http://www.DivanDesign.biz
  */
 
