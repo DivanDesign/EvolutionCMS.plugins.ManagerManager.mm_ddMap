@@ -23,7 +23,7 @@
  * http://www.DivanDesign.biz
  */
 
-function mm_ddYMap($tvs, $roles = '', $templates = '', $width = 'auto', $height = '400', $hideField = true){
+function mm_ddYMap($tvs, $roles = '', $templates = '', $width = 'auto', $height = '400', $hideField = true, $LngLat = ''){
 	if (!useThisRule($roles, $templates)){return;}
 	
 	global $modx;
@@ -57,11 +57,12 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $width = 'auto', $height 
 			if (isset($usedTvs[$tv])){
 				$output .= 
 '
-$j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({
-	hideField: '.intval($hideField).',
-	width: "'.$width.'",
-	height: "'.$height.'"
-});
+$j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({'.
+(!is_null($hideField)?'hideField: '.intval($hideField).',':'').
+($width?'width: "'.$width.'",':'').
+($height?'height: "'.$height.'",':'').
+($LngLat?'LngLat: "'.$LngLat.'",':'').
+'});
 ';
 			}
 		}
