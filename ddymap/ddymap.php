@@ -31,7 +31,7 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $width = 'auto', $height 
 	
 	if ($e->name == 'OnDocFormPrerender'){
 		//The Yandex.Maps library including
-		$output = includeJsCss('http://api-maps.yandex.ru/2.1/?lang=ru_RU', 'html', 'api-maps.yandex.ru', '2.1');
+		$output = includeJsCss('//api-maps.yandex.ru/2.1/?lang=ru_RU', 'html', 'api-maps.yandex.ru', '2.1');
 		//The jQuery.ddYMap library including
 		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jquery.ddYMap-1.3.1.min.js', 'html', 'jquery.ddYMap', '1.3.1');
 		//The main js file including
