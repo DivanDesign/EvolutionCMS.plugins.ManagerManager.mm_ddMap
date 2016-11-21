@@ -5,25 +5,31 @@
  * 
  * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
  * 
- * @uses ManagerManager plugin 0.6.2.
+ * @uses MODXEvo.plugin.ManagerManager >= 0.6.2.
  * 
- * @param $tvs {comma separated string} - TV names to which the widget is applied. @required
- * @param $roles {comma separated string} - The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
- * @param $templates {comma separated string} - Id of the templates to which this widget is applied (when this parameter is empty then widget is applied to the all templates). Default: ''.
- * @param $width {'auto'; integer} - Width of the map container. Default: 'auto'.
- * @param $height {integer} - Height of the map container. Default: 400.
- * @param $hideField {boolean} - Original coordinates field hiding status (true — hide, false — show). Default: true.
+ * @param $tvs {string_commaSeparated} — TV names to which the widget is applied. @required
+ * @param $roles {string_commaSeparated} — The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
+ * @param $templates {string_commaSeparated} — Id of the templates to which this widget is applied (when this parameter is empty then widget is applied to the all templates). Default: ''.
+ * @param $width {integer|'auto'} — Width of the map container. Default: 'auto'.
+ * @param $height {integer} — Height of the map container. Default: 400.
+ * @param $hideField {boolean} — Original coordinates field hiding status (true — hide, false — show). Default: true.
  * 
  * @event OnDocFormPrerender
  * @event OnDocFormRender
  * 
  * @link http://code.divandesign.biz/modx/mm_ddymap/1.5b
  * 
- * @copyright 2015, DivanDesign
- * http://www.DivanDesign.biz
+ * @copyright 2012–2015 DivanDesign {@link http://www.DivanDesign.biz }
  */
 
-function mm_ddYMap($tvs, $roles = '', $templates = '', $width = 'auto', $height = '400', $hideField = true){
+function mm_ddYMap(
+	$tvs,
+	$roles = '',
+	$templates = '',
+	$width = 'auto',
+	$height = '400',
+	$hideField = true
+){
 	if (!useThisRule($roles, $templates)){return;}
 	
 	global $modx;
@@ -49,7 +55,7 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $width = 'auto', $height 
 		$usedTvs = tplUseTvs($mm_current_page['template'], $tvs, '', 'id', 'name');
 		if ($usedTvs == false){return;}
 		
-		$output .= "//---------- mm_ddYMap :: Begin -----\n";
+		$output .= '//---------- mm_ddYMap :: Begin -----'.PHP_EOL;
 		
 		//Iterate over supplied TVs instead of doing so to the result of tplUseTvs() to maintain rendering order.
 		foreach ($tvs as $tv){
@@ -66,7 +72,7 @@ $j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({
 			}
 		}
 		
-		$output .= "//---------- mm_ddYMap :: End -----\n";
+		$output .= '//---------- mm_ddYMap :: End -----'.PHP_EOL;
 		
 		$e->output($output);
 	}

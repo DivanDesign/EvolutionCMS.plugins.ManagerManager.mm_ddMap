@@ -1,5 +1,5 @@
 /**
- * jQuery ddMM.mm_ddYMap Plugin
+ * jQuery.ddMM.mm_ddYMap
  * @version 1.1 (2015-05-07)
  * 
  * @uses Yandex.Maps 2.1.
@@ -7,8 +7,7 @@
  * @uses jQuery.ddMM 1.0.
  * @uses jQuery.ddYMap 1.3.1.
  * 
- * @copyright 2015, DivanDesign
- * http://www.DivanDesign.biz
+ * @copyright 2013–2015 [DivanDesign]{@link http://www.DivanDesign.biz }
  */
 
 (function($){
@@ -22,7 +21,22 @@ $.ddMM.mm_ddYMap = {
 		//Высота контейнера с картой
 		height: 400
 	},
-	//Инициализация карты
+	
+	/**
+	 * @method init
+	 * @version 1.0 (2016-11-25)
+	 * 
+	 * @desc Инициализация карты.
+	 * 
+	 * @param elem {object_plain} — The parameters.
+	 * @param elem.id {integer} — TV ID.
+	 * @param elem.LngLat {array} — Position.
+	 * @param elem.LngLat[0] {float} — Lng.
+	 * @param elem.LngLat[1] {float} — Lat.
+	 * @param elem.$elem {jQuery} — Coordinates field.
+	 * 
+	 * @returns {void}
+	 */
 	init: function(elem){
 		var $mapElement = $('#ddYMap' + elem.id);
 		
@@ -78,20 +92,19 @@ $.ddMM.mm_ddYMap = {
 };
 
 /**
- * jQuery.fn.mm_ddYMap Plugin
+ * jQuery.fn.mm_ddYMap
  * @version 1.0.3 (2015-09-16)
  * 
  * @desc Делает карту.
  * 
- * @uses $.ddMM.mm_ddYMap
+ * @uses $.ddMM.mm_ddYMap.
  * 
- * @param params {plain object} - Параметры передаются в виде plain object.
- * @param params.hideField {boolean} - Нужно ли скрывать оригинальное поле. Default: true.
- * @param params.width {integer; 'auto'} - Ширина контейнера с картой. Default: 'auto'.
- * @param params.height {integer} - Высота контейнера с картой. Default: 400.
+ * @param [params] {object_plain} — Параметры передаются в виде plain object.
+ * @param [params.hideField=true] {boolean} — Нужно ли скрывать оригинальное поле.
+ * @param [params.width='auto'] {integer|'auto'} — Ширина контейнера с картой.
+ * @param [params.height=400] {integer} — Высота контейнера с картой.
  * 
- * @copyright 2015, DivanDesign
- * http://www.DivanDesign.biz
+ * @copyright 2013–2015 [DivanDesign]{@link http://www.DivanDesign.biz }
  */
 $.fn.mm_ddYMap = function(params){
 	//Обрабатываем параметры
