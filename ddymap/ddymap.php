@@ -33,7 +33,7 @@ function mm_ddYMap($tvs, $roles = '', $templates = '', $width = 'auto', $height 
 		//The Yandex.Maps library including
 		$output = includeJsCss('//api-maps.yandex.ru/2.1/?lang=ru_RU', 'html', 'api-maps.yandex.ru', '2.1');
 		//The jQuery.ddYMap library including
-		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddYMap-1.3.1.min.js', 'html', 'jQuery.ddYMap', '1.3.1');
+		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddYMap-1.4.min.js', 'html', 'jQuery.ddYMap', '1.4');
 		//The main js file including
 		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddYMap.js', 'html', 'jQuery.ddMM.mm_ddYMap', '1.1');
 		
