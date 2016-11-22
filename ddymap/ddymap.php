@@ -7,12 +7,12 @@
  * 
  * @uses MODXEvo.plugin.ManagerManager >= 0.6.2.
  * 
- * @param $tvs {string_commaSeparated} — TV names to which the widget is applied. @required
+ * @param $fields {string_commaSeparated} — TV names to which the widget is applied. @required
  * @param $roles {string_commaSeparated} — The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
  * @param $templates {string_commaSeparated} — Id of the templates to which this widget is applied (when this parameter is empty then widget is applied to the all templates). Default: ''.
- * @param $width {integer|'auto'} — Width of the map container. Default: 'auto'.
- * @param $height {integer} — Height of the map container. Default: 400.
- * @param $hideField {boolean} — Original coordinates field hiding status (true — hide, false — show). Default: true.
+ * @param $mapWidth {integer|'auto'} — Width of the map container. Default: 'auto'.
+ * @param $mapHeight {integer} — Height of the map container. Default: 400.
+ * @param $hideOriginalInput {boolean} — Original coordinates field hiding status (true — hide, false — show). Default: true.
  * 
  * @event OnDocFormPrerender
  * @event OnDocFormRender
@@ -23,12 +23,12 @@
  */
 
 function mm_ddYMap(
-	$tvs,
+	$fields,
 	$roles = '',
 	$templates = '',
-	$width = 'auto',
-	$height = '400',
-	$hideField = true
+	$mapWidth = 'auto',
+	$mapHeight = '400',
+	$hideOriginalInput = true
 ){
 	if (!useThisRule($roles, $templates)){return;}
 	
@@ -50,23 +50,23 @@ function mm_ddYMap(
 		$output = '';
 		
 		//if we've been supplied with a string, convert it into an array
-		$tvs = makeArray($tvs);
+		$fields = makeArray($fields);
 		
-		$usedTvs = tplUseTvs($mm_current_page['template'], $tvs, '', 'id', 'name');
+		$usedTvs = tplUseTvs($mm_current_page['template'], $fields, '', 'id', 'name');
 		if ($usedTvs == false){return;}
 		
 		$output .= '//---------- mm_ddYMap :: Begin -----'.PHP_EOL;
 		
 		//Iterate over supplied TVs instead of doing so to the result of tplUseTvs() to maintain rendering order.
-		foreach ($tvs as $tv){
-			//If this $tv is used in a current template
-			if (isset($usedTvs[$tv])){
+		foreach ($fields as $field){
+			//If this $field is used in a current template
+			if (isset($usedTvs[$field])){
 				$output .= 
 '
-$j("#tv'.$usedTvs[$tv]['id'].'").mm_ddYMap({
-	hideField: '.intval($hideField).',
-	width: "'.$width.'",
-	height: "'.$height.'"
+$j("#tv'.$usedTvs[$field]['id'].'").mm_ddYMap({
+	hideField: '.intval($hideOriginalInput).',
+	width: "'.$mapWidth.'",
+	height: "'.$mapHeight.'"
 });
 ';
 			}
