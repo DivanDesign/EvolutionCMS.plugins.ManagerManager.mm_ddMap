@@ -5,14 +5,16 @@
  * 
  * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
  * 
- * @uses MODXEvo.plugin.ManagerManager >= 0.6.2.
+ * @uses PHP >= 5.4.
+ * @uses MODXEvo.plugin.ManagerManager >= 0.7.
  * 
- * @param $fields {string_commaSeparated} — TV names to which the widget is applied. @required
- * @param $roles {string_commaSeparated} — The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
- * @param $templates {string_commaSeparated} — Id of the templates to which this widget is applied (when this parameter is empty then widget is applied to the all templates). Default: ''.
- * @param $mapWidth {integer|'auto'} — Width of the map container. Default: 'auto'.
- * @param $mapHeight {integer} — Height of the map container. Default: 400.
- * @param $hideOriginalInput {boolean} — Original coordinates field hiding status (true — hide, false — show). Default: true.
+ * @param $params {array_associative|stdClass} — The object of params. @required
+ * @param $params['fields'] {string_commaSeparated} — TV names to which the widget is applied. @required
+ * @param $params['mapWidth'] {integer|'auto'} — Width of the map container. Default: 'auto'.
+ * @param $params['mapHeight'] {integer} — Height of the map container. Default: 400.
+ * @param $params['hideOriginalInput'] {boolean} — Original coordinates field hiding status (true — hide, false — show). Default: true.
+ * @param $params['roles'] {string_commaSeparated} — The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
+ * @param $params['templates'] {string_commaSeparated} — Id of the templates to which this widget is applied (when this parameter is empty then widget is applied to the all templates). Default: ''.
  * 
  * @event OnDocFormPrerender
  * @event OnDocFormRender
@@ -22,15 +24,37 @@
  * @copyright 2012–2015 DivanDesign {@link http://www.DivanDesign.biz }
  */
 
-function mm_ddYMap(
-	$fields,
-	$roles = '',
-	$templates = '',
-	$mapWidth = 'auto',
-	$mapHeight = '400',
-	$hideOriginalInput = true
-){
-	if (!useThisRule($roles, $templates)){return;}
+function mm_ddYMap($params){
+	//For backward compatibility
+	if (
+		!is_array($params) &&
+		!is_object($params)
+	){
+		//Convert ordered list of params to named
+		$params = ddTools::orderedParamsToNamed([
+			'paramsList' => func_get_args(),
+			'compliance' => [
+				'fields',
+				'roles',
+				'templates',
+				'mapWidth',
+				'mapHeight',
+				'hideOriginalInput'
+			]
+		]);
+	}
+	
+	//Defaults
+	$params = (object) array_merge([
+// 		'fields' => '',
+		'mapWidth' => 'auto',
+		'mapHeight' => 400,
+		'hideOriginalInput' => true,
+		'roles' => '',
+		'templates' => ''
+	], (array) $params);
+	
+	if (!useThisRule($params->roles, $params->templates)){return;}
 	
 	global $modx;
 	$e = &$modx->Event;
@@ -50,23 +74,23 @@ function mm_ddYMap(
 		$output = '';
 		
 		//if we've been supplied with a string, convert it into an array
-		$fields = makeArray($fields);
+		$params->fields = makeArray($params->fields);
 		
-		$usedTvs = tplUseTvs($mm_current_page['template'], $fields, '', 'id', 'name');
+		$usedTvs = tplUseTvs($mm_current_page['template'], $params->fields, '', 'id', 'name');
 		if ($usedTvs == false){return;}
 		
 		$output .= '//---------- mm_ddYMap :: Begin -----'.PHP_EOL;
 		
 		//Iterate over supplied TVs instead of doing so to the result of tplUseTvs() to maintain rendering order.
-		foreach ($fields as $field){
+		foreach ($params->fields as $field){
 			//If this $field is used in a current template
 			if (isset($usedTvs[$field])){
 				$output .= 
 '
 $j("#tv'.$usedTvs[$field]['id'].'").mm_ddYMap({
-	hideField: '.intval($hideOriginalInput).',
-	width: "'.$mapWidth.'",
-	height: "'.$mapHeight.'"
+	hideField: '.intval($params->hideOriginalInput).',
+	width: "'.$params->mapWidth.'",
+	height: "'.$params->mapHeight.'"
 });
 ';
 			}
