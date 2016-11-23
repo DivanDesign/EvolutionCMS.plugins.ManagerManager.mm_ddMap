@@ -71,23 +71,18 @@ function mm_ddYMap($params){
 	}else if ($e->name == 'OnDocFormRender'){
 		global $mm_current_page;
 		
-		$params->fields = getTplMatchedFields($params->fields);
-		if ($params->fields == false){return;}
-		
 		$output = '';
 		
 		$output .= '//---------- mm_ddYMap :: Begin -----'.PHP_EOL;
 		
-		foreach ($params->fields as $field){
-			$output .= 
+		$output .= 
 '
-$j.ddMM.fields.'.$field.'.$elem.mm_ddYMap({
+$j.ddMM.getFieldElems({fields: "'.$params->fields.'"}).mm_ddYMap({
 	hideField: '.intval($params->hideOriginalInput).',
 	width: "'.$params->mapWidth.'",
 	height: "'.$params->mapHeight.'"
 });
 ';
-		}
 		
 		$output .= '//---------- mm_ddYMap :: End -----'.PHP_EOL;
 		
