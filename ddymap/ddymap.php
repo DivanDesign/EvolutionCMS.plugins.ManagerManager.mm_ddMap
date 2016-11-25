@@ -13,6 +13,7 @@
  * @param $params['mapWidth'] {integer|'auto'} — Width of the map container. Default: 'auto'.
  * @param $params['mapHeight'] {integer} — Height of the map container. Default: 400.
  * @param $params['hideOriginalInput'] {boolean} — Original coordinates field hiding status (true — hide, false — show). Default: true.
+ * @param $params['defaultZoom'] {integer} — Default map zoom. Default: 15.
  * @param $params['roles'] {string_commaSeparated} — The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
  * @param $params['templates'] {string_commaSeparated} — Id of the templates to which this widget is applied (when this parameter is empty then widget is applied to the all templates). Default: ''.
  * 
@@ -50,6 +51,7 @@ function mm_ddYMap($params){
 		'mapWidth' => 'auto',
 		'mapHeight' => 400,
 		'hideOriginalInput' => true,
+		'defaultZoom' => '',
 		'roles' => '',
 		'templates' => ''
 	], (array) $params);
@@ -65,7 +67,7 @@ function mm_ddYMap($params){
 		//The jQuery.ddYMap library including
 		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddYMap-1.4.min.js', 'html', 'jQuery.ddYMap', '1.4');
 		//The main js file including
-		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddYMap.js', 'html', 'jQuery.ddMM.mm_ddYMap', '1.1');
+		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddYMap.js', 'html', 'jQuery.ddMM.mm_ddYMap', '1.1.1');
 		
 		$e->output($output);
 	}else if ($e->name == 'OnDocFormRender'){
@@ -80,7 +82,9 @@ function mm_ddYMap($params){
 $j.ddMM.getFieldElems({fields: "'.$params->fields.'"}).mm_ddYMap({
 	hideField: '.intval($params->hideOriginalInput).',
 	width: "'.$params->mapWidth.'",
-	height: "'.$params->mapHeight.'"
+	height: "'.$params->mapHeight.'"'.(
+		!empty($params->defaultZoom) ? ', defaultZoom: '.intval($params->defaultZoom) : ''
+	).'
 });
 ';
 		

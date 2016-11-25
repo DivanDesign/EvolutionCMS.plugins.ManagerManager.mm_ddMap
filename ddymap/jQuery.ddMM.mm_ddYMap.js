@@ -1,13 +1,13 @@
 /**
  * jQuery.ddMM.mm_ddYMap
- * @version 1.1 (2015-05-07)
+ * @version 1.1.1 (2016-11-25)
  * 
  * @uses Yandex.Maps 2.1.
  * @uses jQuery 1.10.2.
  * @uses jQuery.ddMM 1.0.
- * @uses jQuery.ddYMap 1.3.1.
+ * @uses jQuery.ddYMap 1.4.
  * 
- * @copyright 2013–2015 [DivanDesign]{@link http://www.DivanDesign.biz }
+ * @copyright 2013–2016 [DivanDesign]{@link http://www.DivanDesign.biz }
  */
 
 (function($){
@@ -19,12 +19,14 @@ $.ddMM.mm_ddYMap = {
 		//Ширина контейнера с картой
 		width: 'auto',
 		//Высота контейнера с картой
-		height: 400
+		height: 400,
+		//Default map zoom
+		defaultZoom: 15
 	},
 	
 	/**
 	 * @method init
-	 * @version 1.0 (2016-11-25)
+	 * @version 1.1 (2016-11-25)
 	 * 
 	 * @desc Инициализация карты.
 	 * 
@@ -34,6 +36,7 @@ $.ddMM.mm_ddYMap = {
 	 * @param elem.LngLat[0] {float} — Lng.
 	 * @param elem.LngLat[1] {float} — Lat.
 	 * @param elem.$elem {jQuery} — Coordinates field.
+	 * @param elem.defaultZoom {integer} — Default map zoom.
 	 * 
 	 * @returns {void}
 	 */
@@ -86,14 +89,15 @@ $.ddMM.mm_ddYMap = {
 			});
 		}).ddYMap({
 			placemarks: elem.LngLat,
-			placemarkOptions: {draggable: true}
+			placemarkOptions: {draggable: true},
+			defaultZoom: elem.defaultZoom
 		});
 	}
 };
 
 /**
  * jQuery.fn.mm_ddYMap
- * @version 1.0.3 (2015-09-16)
+ * @version 1.1 (2016-11-25)
  * 
  * @desc Делает карту.
  * 
@@ -103,8 +107,9 @@ $.ddMM.mm_ddYMap = {
  * @param [params.hideField=true] {boolean} — Нужно ли скрывать оригинальное поле.
  * @param [params.width='auto'] {integer|'auto'} — Ширина контейнера с картой.
  * @param [params.height=400] {integer} — Высота контейнера с картой.
+ * @param [params.defaultZoom] {integer} — Default map zoom.
  * 
- * @copyright 2013–2015 [DivanDesign]{@link http://www.DivanDesign.biz }
+ * @copyright 2013–2016 [DivanDesign]{@link http://www.DivanDesign.biz }
  */
 $.fn.mm_ddYMap = function(params){
 	//Обрабатываем параметры
@@ -125,6 +130,8 @@ $.fn.mm_ddYMap = function(params){
 		elem.id = elem.$elem.attr('id');
 		//Координаты
 		elem.LngLat = elem.$elem.val();
+		//Default map zoom
+		elem.defaultZoom = params.defaultZoom;
 		
 		//Родитель
 		var	$elemParent = elem.$elem.parents('tr:first'),
