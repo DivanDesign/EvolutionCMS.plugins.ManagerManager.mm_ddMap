@@ -1,6 +1,6 @@
 /**
  * jQuery.ddMM.mm_ddYMap
- * @version 1.1.3 (2016-11-25)
+ * @version 1.1.4 (2016-11-25)
  * 
  * @uses Yandex.Maps 2.1.
  * @uses jQuery 1.10.2.
@@ -21,7 +21,9 @@ $.ddMM.mm_ddYMap = {
 		//Высота контейнера с картой
 		height: 400,
 		//Default map zoom
-		defaultZoom: 15
+		defaultZoom: 15,
+		//Default map position when field has no value
+		defaultPosition: '55.20432131317031,61.28999948501182'
 	},
 	
 	/**
@@ -32,8 +34,8 @@ $.ddMM.mm_ddYMap = {
 	 * 
 	 * @param elem {object_plain} — The parameters.
 	 * @param elem.position {array} — Position.
-	 * @param elem.position[0] {float} — Lng.
-	 * @param elem.position[1] {float} — Lat.
+	 * @param elem.position[0] {float} — Lat.
+	 * @param elem.position[1] {float} — Lng.
 	 * @param elem.$map {jQuery} — Map container.
 	 * @param elem.$coordInput {jQuery} — Coordinates field.
 	 * @param elem.defaultZoom {integer} — Default map zoom.
@@ -95,7 +97,7 @@ $.ddMM.mm_ddYMap = {
 
 /**
  * jQuery.fn.mm_ddYMap
- * @version 1.1.2 (2016-11-25)
+ * @version 1.1.3 (2016-11-25)
  * 
  * @desc Делает карту.
  * 
@@ -152,7 +154,7 @@ $.fn.mm_ddYMap = function(params){
 		
 		//Если координаты не заданны, то задаём дефолт
 		if ($.trim(elem.position) == ''){
-			elem.position = '55.20432131317031,61.28999948501182';
+			elem.position = params.defaultPosition;
 		}
 		
 		//Разбиваем координаты
