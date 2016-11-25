@@ -1,6 +1,6 @@
 /**
  * jQuery.ddMM.mm_ddYMap
- * @version 1.1.4 (2016-11-25)
+ * @version 1.1.5 (2016-11-25)
  * 
  * @uses Yandex.Maps 2.1.
  * @uses jQuery 1.10.2.
@@ -97,7 +97,7 @@ $.ddMM.mm_ddYMap = {
 
 /**
  * jQuery.fn.mm_ddYMap
- * @version 1.1.3 (2016-11-25)
+ * @version 1.1.4 (2016-11-25)
  * 
  * @desc Делает карту.
  * 
@@ -134,7 +134,7 @@ $.fn.mm_ddYMap = function(params){
 		//Родитель
 		var	$coordInputParent = elem.$coordInput.parents('tr:first'),
 			//Запоминаем название поля
-			sectionName = $coordInputParent.find('.warning').text(),
+			sectionName = $coordInputParent.find('.warning').html(),
 			//Контейнер для карты
 			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody"></div>');
 		

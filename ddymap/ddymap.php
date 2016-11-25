@@ -71,7 +71,7 @@ function mm_ddYMap($params){
 		//The jQuery.ddYMap library including
 		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddYMap-1.4.min.js', 'html', 'jQuery.ddYMap', '1.4');
 		//The main js file including
-		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddYMap.js', 'html', 'jQuery.ddMM.mm_ddYMap', '1.1.4');
+		$output .= includeJsCss($modx->config['site_url'].'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddYMap.js', 'html', 'jQuery.ddMM.mm_ddYMap', '1.1.5');
 		
 		$e->output($output);
 	}else if ($e->name == 'OnDocFormRender'){
