@@ -1,6 +1,6 @@
 /**
  * jQuery.ddMM.mm_ddYMap
- * @version 1.1.1 (2016-11-25)
+ * @version 1.1.2 (2016-11-25)
  * 
  * @uses Yandex.Maps 2.1.
  * @uses jQuery 1.10.2.
@@ -26,16 +26,16 @@ $.ddMM.mm_ddYMap = {
 	
 	/**
 	 * @method init
-	 * @version 1.1 (2016-11-25)
+	 * @version 2.0 (2016-11-25)
 	 * 
 	 * @desc Инициализация карты.
 	 * 
 	 * @param elem {object_plain} — The parameters.
 	 * @param elem.id {integer} — TV ID.
-	 * @param elem.LngLat {array} — Position.
-	 * @param elem.LngLat[0] {float} — Lng.
-	 * @param elem.LngLat[1] {float} — Lat.
-	 * @param elem.$elem {jQuery} — Coordinates field.
+	 * @param elem.position {array} — Position.
+	 * @param elem.position[0] {float} — Lng.
+	 * @param elem.position[1] {float} — Lat.
+	 * @param elem.$coordInput {jQuery} — Coordinates field.
 	 * @param elem.defaultZoom {integer} — Default map zoom.
 	 * 
 	 * @returns {void}
@@ -67,7 +67,7 @@ $.ddMM.mm_ddYMap = {
 				placemark.geometry.setCoordinates(coords);
 				
 				//Запишем значение в оригинальное поле
-				elem.$elem.val(coords[0] + ',' + coords[1]);
+				elem.$coordInput.val(coords[0] + ',' + coords[1]);
 			});
 			
 			map.controls.add(serachControl);
@@ -78,17 +78,17 @@ $.ddMM.mm_ddYMap = {
 				
 				placemark.geometry.setCoordinates([coords[0], coords[1]]);
 				
-				elem.$elem.val(coords[0] + ',' + coords[1]);
+				elem.$coordInput.val(coords[0] + ',' + coords[1]);
 			});
 			
 			//Перетаскивание метки
 			placemark.events.add('dragend', function(event){
 				var coords = placemark.geometry.getCoordinates();
 				
-				elem.$elem.val(coords[0] + ',' + coords[1]);
+				elem.$coordInput.val(coords[0] + ',' + coords[1]);
 			});
 		}).ddYMap({
-			placemarks: elem.LngLat,
+			placemarks: elem.position,
 			placemarkOptions: {draggable: true},
 			defaultZoom: elem.defaultZoom
 		});
@@ -97,7 +97,7 @@ $.ddMM.mm_ddYMap = {
 
 /**
  * jQuery.fn.mm_ddYMap
- * @version 1.1 (2016-11-25)
+ * @version 1.1.1 (2016-11-25)
  * 
  * @desc Делает карту.
  * 
@@ -125,40 +125,40 @@ $.fn.mm_ddYMap = function(params){
 		var elem = {};
 		
 		//TV с координатами
-		elem.$elem = $(this);
+		elem.$coordInput = $(this);
 		//ID оригинальной TV
-		elem.id = elem.$elem.attr('id');
+		elem.id = elem.$coordInput.attr('id');
 		//Координаты
-		elem.LngLat = elem.$elem.val();
+		elem.position = elem.$coordInput.val();
 		//Default map zoom
 		elem.defaultZoom = params.defaultZoom;
 		
 		//Родитель
-		var	$elemParent = elem.$elem.parents('tr:first'),
+		var	$coordInputParent = elem.$coordInput.parents('tr:first'),
 			//Запоминаем название поля
-			sectionName = $elemParent.find('.warning').text(),
+			sectionName = $coordInputParent.find('.warning').text(),
 			//Контейнер для карты
 			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody"><div id="ddYMap' + elem.id + '" style="width: ' + params.width + '; height: ' + params.height + 'px; position: relative; border: 1px solid #c3c3c3;"></div></div>'),
 			$YMap = $sectionContainer.find('#ddYMap' + elem.id);
 		
 		//Добавляем контейнер
-		elem.$elem.parents('.tab-page:first').append($sectionContainer);
+		elem.$coordInput.parents('.tab-page:first').append($sectionContainer);
 		
 		//Скрываем родителя и разделитель
-		$elemParent.hide().prev('tr').hide();
+		$coordInputParent.hide().prev('tr').hide();
 		
 		//Если скрывать не надо, засовываем перед картой
 		if (!params.hideField){
-		 	elem.$elem.insertBefore($YMap);
+		 	elem.$coordInput.insertBefore($YMap);
 		}
 		
 		//Если координаты не заданны, то задаём дефолт
-		if ($.trim(elem.LngLat) == ''){
-			elem.LngLat = '55.20432131317031,61.28999948501182';
+		if ($.trim(elem.position) == ''){
+			elem.position = '55.20432131317031,61.28999948501182';
 		}
 		
 		//Разбиваем координаты
-		elem.LngLat = elem.LngLat.split(',');
+		elem.position = elem.position.split(',');
 		
 		//Инициализируем
 		$.ddMM.mm_ddYMap.init(elem);
