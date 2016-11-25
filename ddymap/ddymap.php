@@ -1,7 +1,7 @@
 <?php
 /**
  * mm_ddYMap
- * @version 1.5b (2015-05-08)
+ * @version 1.6 (2016-11-25)
  * 
  * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
  * 
@@ -23,9 +23,9 @@
  * @event OnDocFormPrerender
  * @event OnDocFormRender
  * 
- * @link http://code.divandesign.biz/modx/mm_ddymap/1.5b
+ * @link http://code.divandesign.biz/modx/mm_ddymap/1.6
  * 
- * @copyright 2012–2015 DivanDesign {@link http://www.DivanDesign.biz }
+ * @copyright 2012–2016 DivanDesign {@link http://www.DivanDesign.biz }
  */
 
 function mm_ddYMap($params){
@@ -77,12 +77,9 @@ function mm_ddYMap($params){
 	}else if ($e->name == 'OnDocFormRender'){
 		global $mm_current_page;
 		
-		$output = '';
-		
-		$output .= '//---------- mm_ddYMap :: Begin -----'.PHP_EOL;
-		
-		$output .= 
+		$output = 
 '
+//---------- mm_ddYMap :: Begin -----
 $j.ddMM.getFieldElems({fields: "'.$params->fields.'"}).mm_ddYMap({
 	hideField: '.intval($params->hideOriginalInput).',
 	width: "'.$params->mapWidth.'",
@@ -92,9 +89,8 @@ $j.ddMM.getFieldElems({fields: "'.$params->fields.'"}).mm_ddYMap({
 		!empty($params->defaultPosition) ? ', defaultPosition: "'.$params->defaultPosition.'"' : ''
 	).'
 });
+//---------- mm_ddYMap :: End -----
 ';
-		
-		$output .= '//---------- mm_ddYMap :: End -----'.PHP_EOL;
 		
 		$e->output($output);
 	}
