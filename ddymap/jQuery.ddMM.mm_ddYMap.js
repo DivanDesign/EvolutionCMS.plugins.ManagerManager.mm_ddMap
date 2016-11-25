@@ -1,6 +1,6 @@
 /**
  * jQuery.ddMM.mm_ddYMap
- * @version 1.1.2 (2016-11-25)
+ * @version 1.1.3 (2016-11-25)
  * 
  * @uses Yandex.Maps 2.1.
  * @uses jQuery 1.10.2.
@@ -26,27 +26,25 @@ $.ddMM.mm_ddYMap = {
 	
 	/**
 	 * @method init
-	 * @version 2.0 (2016-11-25)
+	 * @version 3.0 (2016-11-25)
 	 * 
 	 * @desc Инициализация карты.
 	 * 
 	 * @param elem {object_plain} — The parameters.
-	 * @param elem.id {integer} — TV ID.
 	 * @param elem.position {array} — Position.
 	 * @param elem.position[0] {float} — Lng.
 	 * @param elem.position[1] {float} — Lat.
+	 * @param elem.$map {jQuery} — Map container.
 	 * @param elem.$coordInput {jQuery} — Coordinates field.
 	 * @param elem.defaultZoom {integer} — Default map zoom.
 	 * 
 	 * @returns {void}
 	 */
 	init: function(elem){
-		var $mapElement = $('#ddYMap' + elem.id);
-		
 		//После инициализации карты
-		$mapElement.on('ddAfterInit', function(){
+		elem.$map.on('ddAfterInit', function(){
 			//Объект карты
-			var map = $mapElement.data('ddYMap').map,
+			var map = elem.$map.data('ddYMap').map,
 				//Контрол поиска
 				serachControl = new ymaps.control.SearchControl({
 					options: {
@@ -97,7 +95,7 @@ $.ddMM.mm_ddYMap = {
 
 /**
  * jQuery.fn.mm_ddYMap
- * @version 1.1.1 (2016-11-25)
+ * @version 1.1.2 (2016-11-25)
  * 
  * @desc Делает карту.
  * 
@@ -126,8 +124,6 @@ $.fn.mm_ddYMap = function(params){
 		
 		//TV с координатами
 		elem.$coordInput = $(this);
-		//ID оригинальной TV
-		elem.id = elem.$coordInput.attr('id');
 		//Координаты
 		elem.position = elem.$coordInput.val();
 		//Default map zoom
@@ -138,8 +134,10 @@ $.fn.mm_ddYMap = function(params){
 			//Запоминаем название поля
 			sectionName = $coordInputParent.find('.warning').text(),
 			//Контейнер для карты
-			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody"><div id="ddYMap' + elem.id + '" style="width: ' + params.width + '; height: ' + params.height + 'px; position: relative; border: 1px solid #c3c3c3;"></div></div>'),
-			$YMap = $sectionContainer.find('#ddYMap' + elem.id);
+			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody"></div>');
+		
+		elem.$map = $('<div style="width: ' + params.width + '; height: ' + params.height + 'px; position: relative; border: 1px solid #c3c3c3;"></div>');
+		elem.$map.appendTo($sectionContainer.filter('.sectionBody'));
 		
 		//Добавляем контейнер
 		elem.$coordInput.parents('.tab-page:first').append($sectionContainer);
@@ -149,7 +147,7 @@ $.fn.mm_ddYMap = function(params){
 		
 		//Если скрывать не надо, засовываем перед картой
 		if (!params.hideField){
-		 	elem.$coordInput.insertBefore($YMap);
+		 	elem.$coordInput.insertBefore(elem.$map);
 		}
 		
 		//Если координаты не заданны, то задаём дефолт
