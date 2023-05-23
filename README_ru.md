@@ -1,6 +1,8 @@
-# (MODX)EvolutionCMS.plugins.ManagerManager.mm_ddYMap
+# (MODX)EvolutionCMS.plugins.ManagerManager.mm_ddMap
 
 Виджет для плагина ManagerManager, позволяющий интегрировать карту Yandex Maps для получения координат.
+
+Сейчас работает только с Яндекс Картами, но в будущем, вероятно, добавим также Google Maps и OpenStreetMap.
 
 
 ## Использует
@@ -11,7 +13,7 @@
 
 ## Установка
 
-Для установки распакуйте архив в `/assets/plungins/managermanager/widgets/ddymap/`.
+Для установки распакуйте архив в `/assets/plungins/managermanager/widgets/mm_ddmap/`.
 
 
 Смотрите также документацию:
@@ -116,7 +118,7 @@
 ### Подключение виджета Yandex Maps для TV «LatLng»
 
 ```php
-mm_ddYMap([
+mm_ddMap([
 	'fields' => 'LatLng'
 ]);
 ```

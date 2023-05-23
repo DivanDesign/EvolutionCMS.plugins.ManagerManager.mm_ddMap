@@ -1,4 +1,4 @@
-# (MODX)EvolutionCMS.plugins.ManagerManager.mm_ddYMap changelog
+# (MODX)EvolutionCMS.plugins.ManagerManager.mm_ddMap changelog
 
 
 ## Version 1.6 (2016-11-25)

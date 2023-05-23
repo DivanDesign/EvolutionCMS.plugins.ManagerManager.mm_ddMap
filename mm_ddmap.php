@@ -1,16 +1,16 @@
 <?php
 /**
- * mm_ddYMap
+ * mm_ddMap
  * @version 1.6 (2016-11-25)
  * 
  * @see README.md
  * 
- * @link https://code.divandesign.biz/modx/mm_ddymap/1.6
+ * @link https://code.divandesign.biz/modx/mm_ddmap
  * 
  * @copyright 2012–2016 DivanDesign {@link https://DivanDesign.biz }
  */
 
-function mm_ddYMap($params){
+function mm_ddMap($params){
 	//For backward compatibility
 	if (
 		!is_array($params) &&
@@ -59,16 +59,16 @@ function mm_ddYMap($params){
 	global $modx;
 	
 	if ($modx->Event->name == 'OnDocFormPrerender'){
-		//The jQuery.ddYMap library including
+		//The jQuery.ddMap library including
 		$output .= includeJsCss(
-			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMap-2.0.min.js',
+			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/mm_ddmap/jQuery.ddMap-2.0.min.js',
 			'html',
 			'jQuery.ddMap',
 			'2.0'
 		);
 		//The main js file including
 		$output .= includeJsCss(
-			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddMap.js',
+			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/mm_ddmap/jQuery.ddMM.mm_ddMap.js',
 			'html',
 			'jQuery.ddMM.mm_ddMap',
 			'2.0'
@@ -85,7 +85,7 @@ function mm_ddYMap($params){
 		
 		$output = 
 '
-//---------- mm_ddYMap :: Begin -----
+//---------- mm_ddMap :: Begin -----
 $j.ddMM.getFieldElems({fields: "' . $params->fields . '"}).mm_ddMap({
 	hideField: ' . intval($params->hideOriginalInput) . ',
 	width: "' . $params->mapWidth . '",
@@ -99,7 +99,7 @@ $j.ddMM.getFieldElems({fields: "' . $params->fields . '"}).mm_ddMap({
 		''
 	) . '
 });
-//---------- mm_ddYMap :: End -----
+//---------- mm_ddMap :: End -----
 ';
 		
 		$modx->Event->output($output);

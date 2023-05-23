@@ -1,6 +1,8 @@
-# (MODX)EvolutionCMS.plugins.ManagerManager.mm_ddYMap
+# (MODX)EvolutionCMS.plugins.ManagerManager.mm_ddMap
 
 A widget for ManagerManager plugin allowing Yandex Maps integration.
+
+Right now the library works only with Yandex Maps, but in the future we are likely to add Google Maps and OpenStreetMap as well.
 
 
 ## Requires
@@ -11,7 +13,7 @@ A widget for ManagerManager plugin allowing Yandex Maps integration.
 
 ## Installation
 
-To install you must unzip the archive to `/assets/plungins/managermanager/widgets/ddymap/`.
+To install you must unzip the archive to `/assets/plungins/managermanager/widgets/mm_ddmap/`.
 
 
 You may also read this documentation:
@@ -116,7 +118,7 @@ You may also read this documentation:
 ### Yandex Maps widget connection to the “LatLng” TV
 
 ```php
-mm_ddYMap([
+mm_ddMap([
 	'fields' => 'LatLng'
 ]);
 ```
