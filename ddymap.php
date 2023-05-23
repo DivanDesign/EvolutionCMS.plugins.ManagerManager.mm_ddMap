@@ -68,10 +68,10 @@ function mm_ddYMap($params){
 		);
 		//The main js file including
 		$output .= includeJsCss(
-			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddYMap.js',
+			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddMap.js',
 			'html',
-			'jQuery.ddMM.mm_ddYMap',
-			'1.1.7'
+			'jQuery.ddMM.mm_ddMap',
+			'2.0'
 		);
 		
 		$modx->Event->output($output);
@@ -86,7 +86,7 @@ function mm_ddYMap($params){
 		$output = 
 '
 //---------- mm_ddYMap :: Begin -----
-$j.ddMM.getFieldElems({fields: "' . $params->fields . '"}).mm_ddYMap({
+$j.ddMM.getFieldElems({fields: "' . $params->fields . '"}).mm_ddMap({
 	hideField: ' . intval($params->hideOriginalInput) . ',
 	width: "' . $params->mapWidth . '",
 	height: "' . $params->mapHeight . '"' . (

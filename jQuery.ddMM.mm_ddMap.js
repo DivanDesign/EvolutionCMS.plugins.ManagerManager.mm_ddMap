@@ -1,6 +1,6 @@
 /**
- * jQuery.ddMM.mm_ddYMap
- * @version 1.1.7 (2023-05-23)
+ * jQuery.ddMM.mm_ddMap
+ * @version 2.0 (2023-05-24)
  * 
  * @uses Yandex.Maps 2.1
  * @uses jQuery 1.10.2
@@ -11,7 +11,7 @@
  */
 
 (function($){
-$.ddMM.mm_ddYMap = {
+$.ddMM.mm_ddMap = {
 	//Параметры по умолчанию
 	defaults: {
 		//Нужно ли скрывать оригинальное поле
@@ -113,12 +113,12 @@ $.ddMM.mm_ddYMap = {
 };
 
 /**
- * jQuery.fn.mm_ddYMap
- * @version 1.1.5 (2023-05-23)
+ * jQuery.fn.mm_ddMap
+ * @version 2.0 (2023-05-24)
  * 
  * @desc Делает карту.
  * 
- * @uses $.ddMM.mm_ddYMap
+ * @uses $.ddMM.mm_ddMap
  * 
  * @param [params] {objectPlain} — Параметры передаются в виде plain object.
  * @param [params.hideField=true] {boolean} — Нужно ли скрывать оригинальное поле.
@@ -126,13 +126,13 @@ $.ddMM.mm_ddYMap = {
  * @param [params.height=400] {integer} — Высота контейнера с картой.
  * @param [params.defaultZoom] {integer} — Default map zoom.
  * 
- * @copyright 2013–2016 [DivanDesign]{@link http://www.DivanDesign.biz }
+ * @copyright 2013–2023 [DivanDesign]{@link http://www.DivanDesign.biz }
  */
-$.fn.mm_ddYMap = function(params){
+$.fn.mm_ddMap = function(params){
 	//Обрабатываем параметры
 	params = $.extend(
 		{},
-		$.ddMM.mm_ddYMap.defaults,
+		$.ddMM.mm_ddMap.defaults,
 		params || {}
 	);
 	
@@ -184,7 +184,7 @@ $.fn.mm_ddYMap = function(params){
 		elem.position = elem.position.split(',');
 		
 		//Инициализируем
-		$.ddMM.mm_ddYMap.init(elem);
+		$.ddMM.mm_ddMap.init(elem);
 	});
 };
 })(jQuery);
