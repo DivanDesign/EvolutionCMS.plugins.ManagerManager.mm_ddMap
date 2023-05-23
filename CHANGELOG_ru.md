@@ -1,6 +1,16 @@
 # (MODX)EvolutionCMS.plugins.ManagerManager.mm_ddMap changelog
 
 
+## Версия 1.7 (2023-05-24)
+* \+ Параметры → `$params->fields`: Также может быть задан, как массив, а не только строка, разделённая запятыми.
+* \+ Виджет будет отображать оригинальный текстовое поле с координатами, если вдруг загрузка Яндекс Карт не удалась.
+* \* Виджет переименован из `mm_ddYMap` в `mm_ddMap` поскольку в будущем, вероятно, добавим также Google Maps и OpenStreetMap (пожалуйста, [напишите нам](https://t.me/dd_code) если вам нужно такое).
+* \* [jQuery.ddMap](https://github.com/DivanDesign/jQuery.ddMap) обновлена с 1.4 до 2.0.
+* \+ README, README_ru.
+* \+ CHANGELOG, CHANGELOG_ru.
+* \+ Composer.json.
+
+
 ## Версия 1.6 (2016-11-25)
 * \* Корректно работает с HTTPS. Большое спасибо [@byscrimm](https://github.com/byscrimm).
 * \* Параметры:

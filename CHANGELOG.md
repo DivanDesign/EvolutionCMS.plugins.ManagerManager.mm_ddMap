@@ -1,6 +1,16 @@
 # (MODX)EvolutionCMS.plugins.ManagerManager.mm_ddMap changelog
 
 
+## Version 1.7 (2023-05-24)
+* \+ Parameters → `$params->fields`: Can also be set as array, not only comma separated string.
+* \+ The widget will display original text input with coordinates if Yandex Map loading fails.
+* \* The widget has been renamed from `mm_ddYMap` to `mm_ddMap` because in the future we are likely to add Google Maps and OpenStreetMap as well (please [contact us](https://t.me/dd_code) if you need it).
+* \* [jQuery.ddMap](https://github.com/DivanDesign/jQuery.ddMap) has been updated from 1.4 to 2.0.
+* \+ README, README_ru.
+* \+ CHANGELOG, CHANGELOG_ru.
+* \+ Composer.json.
+
+
 ## Version 1.6 (2016-11-25)
 * \* The widget works correctly with HTTPS. Many thanks to [@byscrimm](https://github.com/byscrimm).
 * \* Parameters:

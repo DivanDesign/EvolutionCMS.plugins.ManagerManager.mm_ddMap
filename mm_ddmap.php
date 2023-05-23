@@ -1,13 +1,13 @@
 <?php
 /**
  * mm_ddMap
- * @version 1.6 (2016-11-25)
+ * @version 1.7 (2023-05-24)
  * 
  * @see README.md
  * 
  * @link https://code.divandesign.ru/modx/mm_ddmap
  * 
- * @copyright 2012–2016 Ronef {@link https://Ronef.ru }
+ * @copyright 2012–2023 Ronef {@link https://Ronef.ru }
  */
 
 function mm_ddMap($params){
