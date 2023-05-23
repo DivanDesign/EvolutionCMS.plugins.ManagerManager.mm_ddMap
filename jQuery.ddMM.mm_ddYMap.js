@@ -1,11 +1,11 @@
 /**
  * jQuery.ddMM.mm_ddYMap
- * @version 1.1.6 (2023-05-23)
+ * @version 1.1.7 (2023-05-23)
  * 
  * @uses Yandex.Maps 2.1
  * @uses jQuery 1.10.2
  * @uses jQuery.ddMM 1.0
- * @uses jQuery.ddYMap 1.4
+ * @uses jQuery.ddMap 2.0
  * 
  * @copyright 2013–2023 [DivanDesign]{@link https://DivanDesign.biz }
  */
@@ -28,7 +28,7 @@ $.ddMM.mm_ddYMap = {
 	
 	/**
 	 * @method init
-	 * @version 3.0.1 (2023-05-23)
+	 * @version 3.0.2 (2023-05-23)
 	 * 
 	 * @desc Инициализация карты.
 	 * 
@@ -50,7 +50,7 @@ $.ddMM.mm_ddYMap = {
 				function(){
 					//Объект карты
 					var
-						map = elem.$map.data('ddYMap').map,
+						map = elem.$map.data('ddMap').map,
 						//Контрол поиска
 						serachControl = new ymaps.control.SearchControl({
 							options: {
@@ -103,9 +103,9 @@ $.ddMM.mm_ddYMap = {
 					);
 				}
 			)
-			.ddYMap({
-				placemarks: elem.position,
-				placemarkOptions: {draggable: true},
+			.ddMap({
+				markers: elem.position,
+				markerOptions: {draggable: true},
 				defaultZoom: elem.defaultZoom,
 			})
 		;

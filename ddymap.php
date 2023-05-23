@@ -59,26 +59,19 @@ function mm_ddYMap($params){
 	global $modx;
 	
 	if ($modx->Event->name == 'OnDocFormPrerender'){
-		//The Yandex.Maps library including
-		$output = includeJsCss(
-			'//api-maps.yandex.ru/2.1/?lang=ru_RU',
-			'html',
-			'api-maps.yandex.ru',
-			'2.1'
-		);
 		//The jQuery.ddYMap library including
 		$output .= includeJsCss(
-			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/ddymap/jQuery.ddYMap-1.4.min.js',
+			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMap-2.0.min.js',
 			'html',
-			'jQuery.ddYMap',
-			'1.4'
+			'jQuery.ddMap',
+			'2.0'
 		);
 		//The main js file including
 		$output .= includeJsCss(
 			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/ddymap/jQuery.ddMM.mm_ddYMap.js',
 			'html',
 			'jQuery.ddMM.mm_ddYMap',
-			'1.1.6'
+			'1.1.7'
 		);
 		
 		$modx->Event->output($output);
