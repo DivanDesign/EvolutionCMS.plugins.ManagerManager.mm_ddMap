@@ -35,7 +35,7 @@ function mm_ddYMap($params){
 		!is_object($params)
 	){
 		//Convert ordered list of params to named
-		$params = ddTools::orderedParamsToNamed([
+		$params = \ddTools::orderedParamsToNamed([
 			'paramsList' => func_get_args(),
 			'compliance' => [
 				'fields',
@@ -75,9 +75,8 @@ function mm_ddYMap($params){
 	}
 	
 	global $modx;
-	$e = &$modx->Event;
 	
-	if ($e->name == 'OnDocFormPrerender'){
+	if ($modx->Event->name == 'OnDocFormPrerender'){
 		//The Yandex.Maps library including
 		$output = includeJsCss(
 			'//api-maps.yandex.ru/2.1/?lang=ru_RU',
@@ -100,10 +99,8 @@ function mm_ddYMap($params){
 			'1.1.6'
 		);
 		
-		$e->output($output);
-	}elseif ($e->name == 'OnDocFormRender'){
-		global $mm_current_page;
-		
+		$modx->Event->output($output);
+	}elseif ($modx->Event->name == 'OnDocFormRender'){
 		$output = 
 '
 //---------- mm_ddYMap :: Begin -----
@@ -123,7 +120,7 @@ $j.ddMM.getFieldElems({fields: "' . $params->fields . '"}).mm_ddYMap({
 //---------- mm_ddYMap :: End -----
 ';
 		
-		$e->output($output);
+		$modx->Event->output($output);
 	}
 }
 ?>
