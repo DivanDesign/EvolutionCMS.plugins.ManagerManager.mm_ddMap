@@ -49,19 +49,21 @@ function mm_ddYMap($params){
 	}
 	
 	//Defaults
-	$params = (object) array_merge(
-		[
-// 			'fields' => '',
-			'mapWidth' => 'auto',
-			'mapHeight' => 400,
-			'hideOriginalInput' => true,
-			'defaultZoom' => '',
-			'defaultPosition' => '',
-			'roles' => '',
-			'templates' => ''
-		],
-		(array) $params
-	);
+	$params = \DDTools\ObjectTools::extend([
+		'objects' => [
+			(object) [
+//	 			'fields' => '',
+				'mapWidth' => 'auto',
+				'mapHeight' => 400,
+				'hideOriginalInput' => true,
+				'defaultZoom' => '',
+				'defaultPosition' => '',
+				'roles' => '',
+				'templates' => '',
+			],
+			$params
+		]
+	]);
 	
 	if (
 		!useThisRule(
