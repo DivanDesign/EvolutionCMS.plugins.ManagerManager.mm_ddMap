@@ -1,13 +1,13 @@
 /**
  * jQuery.ddMM.mm_ddYMap
- * @version 1.1.5 (2016-11-25)
+ * @version 1.1.6 (2023-05-23)
  * 
- * @uses Yandex.Maps 2.1.
- * @uses jQuery 1.10.2.
- * @uses jQuery.ddMM 1.0.
- * @uses jQuery.ddYMap 1.4.
+ * @uses Yandex.Maps 2.1
+ * @uses jQuery 1.10.2
+ * @uses jQuery.ddMM 1.0
+ * @uses jQuery.ddYMap 1.4
  * 
- * @copyright 2013–2016 [DivanDesign]{@link http://www.DivanDesign.biz }
+ * @copyright 2013–2023 [DivanDesign]{@link https://DivanDesign.biz }
  */
 
 (function($){
@@ -28,11 +28,11 @@ $.ddMM.mm_ddYMap = {
 	
 	/**
 	 * @method init
-	 * @version 3.0 (2016-11-25)
+	 * @version 3.0.1 (2023-05-23)
 	 * 
 	 * @desc Инициализация карты.
 	 * 
-	 * @param elem {object_plain} — The parameters.
+	 * @param elem {objectPlain} — The parameters.
 	 * @param elem.position {array} — Position.
 	 * @param elem.position[0] {float} — Lat.
 	 * @param elem.position[1] {float} — Lng.
@@ -44,66 +44,83 @@ $.ddMM.mm_ddYMap = {
 	 */
 	init: function(elem){
 		//После инициализации карты
-		elem.$map.on('ddAfterInit', function(){
-			//Объект карты
-			var map = elem.$map.data('ddYMap').map,
-				//Контрол поиска
-				serachControl = new ymaps.control.SearchControl({
-					options: {
-						useMapBounds: true,
-						noPlacemark: true,
-						maxWidth: 400
-					}
-				}),
-				//Метка.
-				//TODO: Это очень странно, но похоже, что «map.geoObjects.get(0)» возвращает «GeoObjectCollection» вместо «Placemark», потому приходится ещё раз делать «get(0)».
-				placemark = map.geoObjects.get(0).get(0);
-			
-			//При выборе результата поиска
-			serachControl.events.add('resultselect', function(event){
-				var coords = event.originalEvent.target.getResultsArray()[0].geometry.getCoordinates();
-				
-				//Переместим куда надо маркер
-				placemark.geometry.setCoordinates(coords);
-				
-				//Запишем значение в оригинальное поле
-				elem.$coordInput.val(coords[0] + ',' + coords[1]);
-			});
-			
-			map.controls.add(serachControl);
-			
-			//При клике по карте меняем координаты метки
-			map.events.add('click', function(event){
-				var coords = event.get('coords');
-				
-				placemark.geometry.setCoordinates([coords[0], coords[1]]);
-				
-				elem.$coordInput.val(coords[0] + ',' + coords[1]);
-			});
-			
-			//Перетаскивание метки
-			placemark.events.add('dragend', function(event){
-				var coords = placemark.geometry.getCoordinates();
-				
-				elem.$coordInput.val(coords[0] + ',' + coords[1]);
-			});
-		}).ddYMap({
-			placemarks: elem.position,
-			placemarkOptions: {draggable: true},
-			defaultZoom: elem.defaultZoom
-		});
+		elem.$map
+			.on(
+				'ddAfterInit',
+				function(){
+					//Объект карты
+					var
+						map = elem.$map.data('ddYMap').map,
+						//Контрол поиска
+						serachControl = new ymaps.control.SearchControl({
+							options: {
+								useMapBounds: true,
+								noPlacemark: true,
+								maxWidth: 400
+							}
+						}),
+						//Метка.
+						//TODO: Это очень странно, но похоже, что «map.geoObjects.get(0)» возвращает «GeoObjectCollection» вместо «Placemark», потому приходится ещё раз делать «get(0)».
+						placemark = map.geoObjects.get(0).get(0)
+					;
+					
+					//При выборе результата поиска
+					serachControl.events.add(
+						'resultselect',
+						function(event){
+							var coords = event.originalEvent.target.getResultsArray()[0].geometry.getCoordinates();
+							
+							//Переместим куда надо маркер
+							placemark.geometry.setCoordinates(coords);
+							
+							//Запишем значение в оригинальное поле
+							elem.$coordInput.val(coords[0] + ',' + coords[1]);
+						}
+					);
+					
+					map.controls.add(serachControl);
+					
+					//При клике по карте меняем координаты метки
+					map.events.add(
+						'click',
+						function(event){
+							var coords = event.get('coords');
+							
+							placemark.geometry.setCoordinates([coords[0], coords[1]]);
+							
+							elem.$coordInput.val(coords[0] + ',' + coords[1]);
+						}
+					);
+					
+					//Перетаскивание метки
+					placemark.events.add(
+						'dragend',
+						function(event){
+							var coords = placemark.geometry.getCoordinates();
+							
+							elem.$coordInput.val(coords[0] + ',' + coords[1]);
+						}
+					);
+				}
+			)
+			.ddYMap({
+				placemarks: elem.position,
+				placemarkOptions: {draggable: true},
+				defaultZoom: elem.defaultZoom,
+			})
+		;
 	}
 };
 
 /**
  * jQuery.fn.mm_ddYMap
- * @version 1.1.4 (2016-11-25)
+ * @version 1.1.5 (2023-05-23)
  * 
  * @desc Делает карту.
  * 
- * @uses $.ddMM.mm_ddYMap.
+ * @uses $.ddMM.mm_ddYMap
  * 
- * @param [params] {object_plain} — Параметры передаются в виде plain object.
+ * @param [params] {objectPlain} — Параметры передаются в виде plain object.
  * @param [params.hideField=true] {boolean} — Нужно ли скрывать оригинальное поле.
  * @param [params.width='auto'] {integer|'auto'} — Ширина контейнера с картой.
  * @param [params.height=400] {integer} — Высота контейнера с картой.
@@ -113,7 +130,11 @@ $.ddMM.mm_ddYMap = {
  */
 $.fn.mm_ddYMap = function(params){
 	//Обрабатываем параметры
-	params = $.extend({}, $.ddMM.mm_ddYMap.defaults, params || {});
+	params = $.extend(
+		{},
+		$.ddMM.mm_ddYMap.defaults,
+		params || {}
+	);
 	
 	//Если ширина является числом
 	if ($.isNumeric(params.width)){
@@ -132,11 +153,13 @@ $.fn.mm_ddYMap = function(params){
 		elem.defaultZoom = params.defaultZoom;
 		
 		//Родитель
-		var	$coordInputParent = elem.$coordInput.parents('tr:first'),
+		var
+			$coordInputParent = elem.$coordInput.parents('tr:first'),
 			//Запоминаем название поля
 			sectionName = $coordInputParent.find('.warning').html(),
 			//Контейнер для карты
-			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody"></div>');
+			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody"></div>')
+		;
 		
 		elem.$map = $('<div style="width: ' + params.width + '; height: ' + params.height + 'px; position: relative; border: 1px solid #c3c3c3;"></div>');
 		elem.$map.appendTo($sectionContainer.filter('.sectionBody'));
