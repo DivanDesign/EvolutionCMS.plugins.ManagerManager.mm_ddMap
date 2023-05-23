@@ -30,7 +30,9 @@
 	
 * `$params->fields`
 	* Описание: Имена TV, для которых необходимо применить виджет.
-	* Допустимые значения: `stringCommaSeparated`
+	* Допустимые значения:
+		* `stringCommaSeparated`
+		* `array`
 	* **Обязателен**
 	
 * `$params->fields[$i]`

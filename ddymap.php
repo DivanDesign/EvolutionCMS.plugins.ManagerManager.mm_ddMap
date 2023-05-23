@@ -83,6 +83,13 @@ function mm_ddYMap($params){
 		
 		$modx->Event->output($output);
 	}elseif ($modx->Event->name == 'OnDocFormRender'){
+		if (is_array($params->fields)){
+			$params->fields = implode(
+				',',
+				$params->fields
+			);
+		}
+		
 		$output = 
 '
 //---------- mm_ddYMap :: Begin -----

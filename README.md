@@ -30,7 +30,9 @@ You may also read this documentation:
 	
 * `$params->fields`
 	* Desctription: TV names to which the widget is applied.
-	* Valid values: `stringCommaSeparated`
+	* Valid values:
+		* `stringCommaSeparated`
+		* `array`
 	* **Required**
 	
 * `$params->fields[$i]`
