@@ -3,25 +3,7 @@
  * mm_ddYMap
  * @version 1.6 (2016-11-25)
  * 
- * @desc A widget for ManagerManager plugin allowing Yandex Maps integration.
- * 
- * @uses PHP >= 5.4
- * @uses MODXEvo.plugin.ManagerManager >= 0.7
- * 
- * @param $params {arrayAssociative|stdClass} — The object of params. @required
- * @param $params['fields'] {stringCommaSeparated} — TV names to which the widget is applied. @required
- * @param $params['mapWidth'] {integer|'auto'} — Width of the map container. Default: 'auto'.
- * @param $params['mapHeight'] {integer} — Height of the map container. Default: 400.
- * @param $params['hideOriginalInput'] {boolean} — Original coordinates field hiding status (true — hide, false — show). Default: true.
- * @param $params['defaultZoom'] {integer} — Default map zoom. Default: 15.
- * @param $params['defaultPosition'] {stringCommaSeparated} — Default map position when a document field is empty. Default: '55.20432131317031,61.28999948501182'.
- * @param $params['defaultPosition'][0] {float} — Latitude. Default: 55.20432131317031.
- * @param $params['defaultPosition'][1] {float} — Longitude. Default: 61.28999948501182.
- * @param $params['roles'] {stringCommaSeparated} — The roles that the widget is applied to (when this parameter is empty then widget is applied to the all roles). Default: ''.
- * @param $params['templates'] {stringCommaSeparated} — Id of the templates to which this widget is applied (when this parameter is empty then widget is applied to the all templates). Default: ''.
- * 
- * @event OnDocFormPrerender
- * @event OnDocFormRender
+ * @see README.md
  * 
  * @link https://code.divandesign.biz/modx/mm_ddymap/1.6
  * 
