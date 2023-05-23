@@ -71,7 +71,7 @@ function mm_ddMap($params){
 			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/mm_ddmap/jQuery.ddMM.mm_ddMap.js',
 			'html',
 			'jQuery.ddMM.mm_ddMap',
-			'2.0.1'
+			'2.1'
 		);
 		
 		$modx->Event->output($output);

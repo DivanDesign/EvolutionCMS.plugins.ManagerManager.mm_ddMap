@@ -1,6 +1,6 @@
 /**
  * jQuery.ddMM.mm_ddMap
- * @version 2.0.1 (2023-05-24)
+ * @version 2.1 (2023-05-24)
  * 
  * @uses Yandex.Maps 2.1
  * @uses jQuery 1.10.2
@@ -114,7 +114,7 @@ $.ddMM.mm_ddMap = {
 
 /**
  * jQuery.fn.mm_ddMap
- * @version 2.0 (2023-05-24)
+ * @version 2.1 (2023-05-24)
  * 
  * @desc Делает карту.
  * 
@@ -170,9 +170,13 @@ $.fn.mm_ddMap = function(params){
 		//Скрываем родителя и разделитель
 		$coordInputParent.hide().prev('tr').hide();
 		
-		//Если скрывать не надо, засовываем перед картой
 		if (!params.hideField){
+			//Если скрывать не надо, вставляем оригинальное поле с координатами перед картой
 		 	elem.$coordInput.insertBefore(elem.$map);
+		}else{
+			//Если скрывать надо, вставляем прям в контейнер с картой, jQuery.ddMap почистит сам после инициализации
+			//Но если вдруг карта по каким-то причинам не подгрузится, хотя бы оригинальное поле будет видно
+		 	elem.$coordInput.appendTo(elem.$map);
 		}
 		
 		//Если координаты не заданны, то задаём дефолт
