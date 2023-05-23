@@ -5,9 +5,9 @@
  * 
  * @see README.md
  * 
- * @link https://code.divandesign.biz/modx/mm_ddmap
+ * @link https://code.divandesign.ru/modx/mm_ddmap
  * 
- * @copyright 2012–2016 DivanDesign {@link https://DivanDesign.biz }
+ * @copyright 2012–2016 Ronef {@link https://Ronef.ru }
  */
 
 function mm_ddMap($params){
@@ -71,7 +71,7 @@ function mm_ddMap($params){
 			$modx->config['site_url'] . 'assets/plugins/managermanager/widgets/mm_ddmap/jQuery.ddMM.mm_ddMap.js',
 			'html',
 			'jQuery.ddMM.mm_ddMap',
-			'2.0'
+			'2.0.1'
 		);
 		
 		$modx->Event->output($output);

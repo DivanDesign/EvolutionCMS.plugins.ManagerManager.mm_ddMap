@@ -1,13 +1,13 @@
 /**
  * jQuery.ddMM.mm_ddMap
- * @version 2.0 (2023-05-24)
+ * @version 2.0.1 (2023-05-24)
  * 
  * @uses Yandex.Maps 2.1
  * @uses jQuery 1.10.2
  * @uses jQuery.ddMM 1.0
  * @uses jQuery.ddMap 2.0
  * 
- * @copyright 2013–2023 [DivanDesign]{@link https://DivanDesign.biz }
+ * @copyright 2013–2023 Ronef {@link https://Ronef.ru }
  */
 
 (function($){
@@ -126,7 +126,7 @@ $.ddMM.mm_ddMap = {
  * @param [params.height=400] {integer} — Высота контейнера с картой.
  * @param [params.defaultZoom] {integer} — Default map zoom.
  * 
- * @copyright 2013–2023 [DivanDesign]{@link http://www.DivanDesign.biz }
+ * @copyright 2013–2023 Ronef {@link https://Ronef.ru }
  */
 $.fn.mm_ddMap = function(params){
 	//Обрабатываем параметры
