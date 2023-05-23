@@ -101,7 +101,7 @@ function mm_ddYMap($params){
 		);
 		
 		$e->output($output);
-	}else if ($e->name == 'OnDocFormRender'){
+	}elseif ($e->name == 'OnDocFormRender'){
 		global $mm_current_page;
 		
 		$output = 
