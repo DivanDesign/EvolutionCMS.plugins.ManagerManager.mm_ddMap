@@ -1,34 +1,34 @@
 /**
  * jQuery.ddMM.mm_ddMap
- * @version 2.1 (2023-05-24)
+ * @version 2.1.1 (2024-08-06)
  * 
  * @uses Yandex.Maps 2.1
  * @uses jQuery 1.10.2
  * @uses jQuery.ddMM 1.0
  * @uses jQuery.ddMap 2.0
  * 
- * @copyright 2013–2023 Ronef {@link https://Ronef.ru }
+ * @copyright 2013–2024 https://Ronef.me
  */
 
 (function($){
 $.ddMM.mm_ddMap = {
-	//Параметры по умолчанию
+	// Параметры по умолчанию
 	defaults: {
-		//Нужно ли скрывать оригинальное поле
+		// Нужно ли скрывать оригинальное поле
 		hideField: true,
-		//Ширина контейнера с картой
+		// Ширина контейнера с картой
 		width: 'auto',
-		//Высота контейнера с картой
+		// Высота контейнера с картой
 		height: 400,
-		//Default map zoom
+		// Default map zoom
 		defaultZoom: 15,
-		//Default map position when field has no value
+		// Default map position when field has no value
 		defaultPosition: '55.20432131317031,61.28999948501182'
 	},
 	
 	/**
 	 * @method init
-	 * @version 3.0.2 (2023-05-23)
+	 * @version 3.0.3 (2024-08-06)
 	 * 
 	 * @desc Инициализация карты.
 	 * 
@@ -43,15 +43,15 @@ $.ddMM.mm_ddMap = {
 	 * @returns {void}
 	 */
 	init: function(elem){
-		//После инициализации карты
+		// После инициализации карты
 		elem.$map
 			.on(
 				'ddAfterInit',
 				function(){
-					//Объект карты
+					// Объект карты
 					var
 						map = elem.$map.data('ddMap').map,
-						//Контрол поиска
+						// Контрол поиска
 						serachControl = new ymaps.control.SearchControl({
 							options: {
 								useMapBounds: true,
@@ -59,28 +59,28 @@ $.ddMM.mm_ddMap = {
 								maxWidth: 400
 							}
 						}),
-						//Метка.
-						//TODO: Это очень странно, но похоже, что «map.geoObjects.get(0)» возвращает «GeoObjectCollection» вместо «Placemark», потому приходится ещё раз делать «get(0)».
+						// Метка.
+						// TODO: Это очень странно, но похоже, что «map.geoObjects.get(0)» возвращает «GeoObjectCollection» вместо «Placemark», потому приходится ещё раз делать «get(0)».
 						placemark = map.geoObjects.get(0).get(0)
 					;
 					
-					//При выборе результата поиска
+					// При выборе результата поиска
 					serachControl.events.add(
 						'resultselect',
 						function(event){
 							var coords = event.originalEvent.target.getResultsArray()[0].geometry.getCoordinates();
 							
-							//Переместим куда надо маркер
+							// Переместим куда надо маркер
 							placemark.geometry.setCoordinates(coords);
 							
-							//Запишем значение в оригинальное поле
+							// Запишем значение в оригинальное поле
 							elem.$coordInput.val(coords[0] + ',' + coords[1]);
 						}
 					);
 					
 					map.controls.add(serachControl);
 					
-					//При клике по карте меняем координаты метки
+					// При клике по карте меняем координаты метки
 					map.events.add(
 						'click',
 						function(event){
@@ -92,7 +92,7 @@ $.ddMM.mm_ddMap = {
 						}
 					);
 					
-					//Перетаскивание метки
+					// Перетаскивание метки
 					placemark.events.add(
 						'dragend',
 						function(event){
@@ -114,7 +114,7 @@ $.ddMM.mm_ddMap = {
 
 /**
  * jQuery.fn.mm_ddMap
- * @version 2.1 (2023-05-24)
+ * @version 2.1.1 (2024-08-06)
  * 
  * @desc Делает карту.
  * 
@@ -126,68 +126,68 @@ $.ddMM.mm_ddMap = {
  * @param [params.height=400] {integer} — Высота контейнера с картой.
  * @param [params.defaultZoom] {integer} — Default map zoom.
  * 
- * @copyright 2013–2023 Ronef {@link https://Ronef.ru }
+ * @copyright 2013–2024 https://Ronef.me
  */
 $.fn.mm_ddMap = function(params){
-	//Обрабатываем параметры
+	// Обрабатываем параметры
 	params = $.extend(
 		{},
 		$.ddMM.mm_ddMap.defaults,
 		params || {}
 	);
 	
-	//Если ширина является числом
+	// Если ширина является числом
 	if ($.isNumeric(params.width)){
-		//Допишем пиксели
+		// Допишем пиксели
 		params.width += 'px';
 	}
 	
 	return $(this).each(function(){
 		var elem = {};
 		
-		//TV с координатами
+		// TV с координатами
 		elem.$coordInput = $(this);
-		//Координаты
+		// Координаты
 		elem.position = elem.$coordInput.val();
-		//Default map zoom
+		// Default map zoom
 		elem.defaultZoom = params.defaultZoom;
 		
-		//Родитель
+		// Родитель
 		var
 			$coordInputParent = elem.$coordInput.parents('tr:first'),
-			//Запоминаем название поля
+			// Запоминаем название поля
 			sectionName = $coordInputParent.find('.warning').html(),
-			//Контейнер для карты
+			// Контейнер для карты
 			$sectionContainer = $('<div class="sectionHeader">' + sectionName + '</div><div class="sectionBody"></div>')
 		;
 		
 		elem.$map = $('<div style="width: ' + params.width + '; height: ' + params.height + 'px; position: relative; border: 1px solid #c3c3c3;"></div>');
 		elem.$map.appendTo($sectionContainer.filter('.sectionBody'));
 		
-		//Добавляем контейнер
+		// Добавляем контейнер
 		elem.$coordInput.parents('.tab-page:first').append($sectionContainer);
 		
-		//Скрываем родителя и разделитель
+		// Скрываем родителя и разделитель
 		$coordInputParent.hide().prev('tr').hide();
 		
 		if (!params.hideField){
-			//Если скрывать не надо, вставляем оригинальное поле с координатами перед картой
+			// Если скрывать не надо, вставляем оригинальное поле с координатами перед картой
 		 	elem.$coordInput.insertBefore(elem.$map);
 		}else{
-			//Если скрывать надо, вставляем прям в контейнер с картой, jQuery.ddMap почистит сам после инициализации
-			//Но если вдруг карта по каким-то причинам не подгрузится, хотя бы оригинальное поле будет видно
+			// Если скрывать надо, вставляем прям в контейнер с картой, jQuery.ddMap почистит сам после инициализации
+			// Но если вдруг карта по каким-то причинам не подгрузится, хотя бы оригинальное поле будет видно
 		 	elem.$coordInput.appendTo(elem.$map);
 		}
 		
-		//Если координаты не заданны, то задаём дефолт
+		// Если координаты не заданны, то задаём дефолт
 		if ($.trim(elem.position) == ''){
 			elem.position = params.defaultPosition;
 		}
 		
-		//Разбиваем координаты
+		// Разбиваем координаты
 		elem.position = elem.position.split(',');
 		
-		//Инициализируем
+		// Инициализируем
 		$.ddMM.mm_ddMap.init(elem);
 	});
 };
